@@ -15,8 +15,7 @@ extern UIViewController *UnityGetGLViewController();
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
                                 message:message preferredStyle:UIAlertControllerStyleAlert];
 
-    UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-        handler:^(UIAlertAction *action){}];
+    UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
 
     [alert addAction:defaultAction];
     [UnityGetGLViewController() presentViewController:alert animated:YES completion:nil];
