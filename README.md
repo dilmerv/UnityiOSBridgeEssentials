@@ -16,3 +16,5 @@ iOSPlugin.ShowAlert("Hello", "World");
 ```csharp
 iOSPlugin.ShowAlertConfirmation("Basic Alert Confirmation", "Hello this is a basic confirmation !", "CallBack");
 ```
+
+<img src="https://github.com/dilmerv/UnityiOSBridgeEssentials/blob/master/docs/images/bridge.gif" width="300">
