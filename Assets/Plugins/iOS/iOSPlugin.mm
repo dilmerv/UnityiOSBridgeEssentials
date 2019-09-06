@@ -43,7 +43,6 @@ extern UIViewController *UnityGetGLViewController();
     NSURL *postUrl = [NSURL URLWithString:url];
     NSArray *postItems=@[message,postUrl];
     UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:postItems applicationActivities:nil];
-    [UnityGetGLViewController() presentViewController:controller animated:YES completion:nil];
     
     //if iPhone
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
@@ -60,7 +59,34 @@ extern UIViewController *UnityGetGLViewController();
     }
 }
 
++(int)getBatteryStatus
+{
+    UIDevice *myDevice = [UIDevice currentDevice];
+    [myDevice setBatteryMonitoringEnabled:YES];
+    return [myDevice batteryState];
+}
+
++(NSString *)getBatteryLevel
+{
+    UIDevice *myDevice = [UIDevice currentDevice];
+    [myDevice setBatteryMonitoringEnabled:YES];
+    
+    double batLeft = (float)[myDevice batteryLevel] * 100;
+    return [NSString stringWithFormat:@"battery left: %f", batLeft];
+}
+
 @end
+
+char* cStringCopy(const char* string)
+{
+    if (string == NULL)
+        return NULL;
+
+    char* res = (char*)malloc(strlen(string) + 1);
+    strcpy(res, string);
+
+    return res;
+}
 
 extern "C"
 {
@@ -77,5 +103,15 @@ extern "C"
     void _ShareMessage(const char *message, const char *url)
     {
         [iOSPlugin shareView:[NSString stringWithUTF8String:message] addUrl:[NSString stringWithUTF8String:url]];
+    }
+    
+    int _GetBatteryStatus()
+    {
+        return [iOSPlugin getBatteryStatus];
+    }
+    
+    const char * _GetBatteryLevel()
+    {
+        return cStringCopy([[iOSPlugin getBatteryLevel] UTF8String]);
     }
 }

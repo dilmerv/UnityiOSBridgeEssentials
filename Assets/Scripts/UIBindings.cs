@@ -18,6 +18,12 @@ public class UIBindings : MonoBehaviour
     [SerializeField]
     private Button shareMessageButton;
 
+    [SerializeField]
+    private Button batteryStatusButton;
+
+    [SerializeField]
+    private Button batteryLevelButton;
+
     void Start()  
     {
         showAlertButton.onClick.AddListener(ShowBasicAlert);
@@ -25,6 +31,8 @@ public class UIBindings : MonoBehaviour
         rotateUpAlertConfirmationButton.onClick.AddListener(RotateUpAlertConfirmation);
         rotateDownAlertConfirmationButton.onClick.AddListener(RotateDownAlertConfirmation);
         shareMessageButton.onClick.AddListener(ShareMessage);
+        batteryStatusButton.onClick.AddListener(BatteryStatus);
+        batteryLevelButton.onClick.AddListener(BatteryLevel);
     }
 
     void ShowBasicAlert() 
@@ -50,5 +58,17 @@ public class UIBindings : MonoBehaviour
     void ShareMessage()
     {
         iOSPlugin.ShareMessage("Sharing a message!", "https://www.youtube.com/c/dilmervalecillos");
+    }
+
+    void BatteryStatus()
+    {
+        var batteryStatus = iOSPlugin.GetBatteryStatus();
+        iOSPlugin.ShowAlert("Batter Status", batteryStatus.ToString());
+    }
+
+    void BatteryLevel()
+    {
+        string batteryLevel = iOSPlugin.GetBatteryLevel();
+        iOSPlugin.ShowAlert("Batter Level", batteryLevel);
     }
 }
