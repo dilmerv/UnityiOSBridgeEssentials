@@ -50,7 +50,7 @@ extern UIViewController *UnityGetGLViewController();
     }
     //if iPad
     else {
-        UIPopoverPresentationController* popOver = controller.popoverPresentationController;
+        UIPopoverPresentationController *popOver = controller.popoverPresentationController;
         if(popOver){
             popOver.sourceView = controller.view;
             popOver.sourceRect = CGRectMake(UnityGetGLViewController().view.frame.size.width/2, UnityGetGLViewController().view.frame.size.height/4, 0, 0);

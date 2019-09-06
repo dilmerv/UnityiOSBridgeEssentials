@@ -63,12 +63,12 @@ public class UIBindings : MonoBehaviour
     void BatteryStatus()
     {
         var batteryStatus = iOSPlugin.GetBatteryStatus();
-        iOSPlugin.ShowAlert("Batter Status", batteryStatus.ToString());
+        iOSPlugin.ShowAlert("Battery Status", batteryStatus.ToString());
     }
 
     void BatteryLevel()
     {
         string batteryLevel = iOSPlugin.GetBatteryLevel();
-        iOSPlugin.ShowAlert("Batter Level", batteryLevel);
+        iOSPlugin.ShowAlert("Battery Level", batteryLevel);
     }
 }
