@@ -15,12 +15,16 @@ public class UIBindings : MonoBehaviour
     [SerializeField]
     private Button rotateDownAlertConfirmationButton;
 
+    [SerializeField]
+    private Button shareMessageButton;
+
     void Start()  
     {
         showAlertButton.onClick.AddListener(ShowBasicAlert);
         showAlertConfirmationButton.onClick.AddListener(ShowAlertConfirmation);
         rotateUpAlertConfirmationButton.onClick.AddListener(RotateUpAlertConfirmation);
         rotateDownAlertConfirmationButton.onClick.AddListener(RotateDownAlertConfirmation);
+        shareMessageButton.onClick.AddListener(ShareMessage);
     }
 
     void ShowBasicAlert() 
@@ -41,5 +45,10 @@ public class UIBindings : MonoBehaviour
     void RotateDownAlertConfirmation()
     {
         iOSPlugin.ShowAlertConfirmation("Rotating Down", "Should I Rotate Down?", "RotateDownCallBack");
+    }
+
+    void ShareMessage()
+    {
+        iOSPlugin.ShareMessage("Sharing a message!", "https://www.youtube.com/c/dilmervalecillos");
     }
 }

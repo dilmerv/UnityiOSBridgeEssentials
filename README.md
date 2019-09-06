@@ -17,4 +17,10 @@ iOSPlugin.ShowAlert("Hello", "World");
 iOSPlugin.ShowAlertConfirmation("Basic Alert Confirmation", "Hello this is a basic confirmation !", "CallBack");
 ```
 
+### Sharing a Message and Url
+
+```csharp
+iOSPlugin.ShareMessage("Welcome To iOS Bridge Essentials", "https://www.github.com/dilmerv/UnityiOSBridgeEssentials");
+```
+
 <img src="https://github.com/dilmerv/UnityiOSBridgeEssentials/blob/master/docs/images/bridge.gif" width="300">

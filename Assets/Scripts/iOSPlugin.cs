@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class iOSPlugin : MonoBehaviour
@@ -14,6 +12,9 @@ public class iOSPlugin : MonoBehaviour
 
     [DllImport("__Internal")]
     private static extern void _ShowAlertConfirmation(string title, string message, string callback);
+
+    [DllImport("__Internal")]
+    private static extern void _ShareMessage(string message, string url);
     
     public static void ShowAlert(string title, string message)
     {
@@ -25,6 +26,11 @@ public class iOSPlugin : MonoBehaviour
         _ShowAlertConfirmation(title, message, callBack);
     }
 
+    public static void ShareMessage(string message, string url = "")
+    {
+        _ShareMessage(message, url);
+    }
+
     #else
 
     public static void ShowAlert(string title, string message)
@@ -33,6 +39,11 @@ public class iOSPlugin : MonoBehaviour
     }
 
     public static void ShowAlertConfirmation(string title, string message)
+    {
+        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+    }
+
+    public static void ShareMessage(string title, string url = "")
     {
         Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
     }
