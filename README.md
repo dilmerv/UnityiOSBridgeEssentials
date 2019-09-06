@@ -39,7 +39,7 @@ public enum BatteryStatus
 
 ```
 
-### Sharing a Message and Url
+### Get Battery Level
 
 ```csharp
 iOSPlugin.GetBatteryLevel()
