@@ -84,14 +84,14 @@ public class UIBindings : MonoBehaviour
 
     void iCloudGetValue()
     {
-        string savedValue = iOSPlugin.iCloudGetValue(ICLOUD_KEY);
+        string savedValue = iOSPlugin.iCloudGetStringValue(ICLOUD_KEY);
         iOSPlugin.ShowAlert("iCloud Value", string.IsNullOrEmpty(savedValue) ? "Nothing Saved Yet..." : savedValue);
     }
 
     void iCloudSaveValue()
     {
         string valueToSave = System.Guid.NewGuid().ToString();
-        bool success = iOSPlugin.iCloudSaveValue(ICLOUD_KEY, valueToSave);
+        bool success = iOSPlugin.iCloudSaveStringValue(ICLOUD_KEY, valueToSave);
         
         if(success)
         {

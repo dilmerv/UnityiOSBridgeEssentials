@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class iOSPluginCallBacks : MonoBehaviour

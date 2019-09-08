@@ -44,16 +44,16 @@ public enum BatteryStatus
 iOSPlugin.GetBatteryLevel()
 ```
 
-### Save Value to iCloud
+### Save String Value to iCloud
 
 ```csharp
-bool success = iOSPlugin.iCloudSaveValue(ICLOUD_KEY, valueToSave);
+bool success = iOSPlugin.iCloudSaveStringValue(ICLOUD_KEY, valueToSave);
 ```
 
-### Get Value from iCloud
+### Get String Value from iCloud
 
 ```csharp
-string savedValue = iOSPlugin.iCloudGetValue(ICLOUD_KEY);
+string savedValue = iOSPlugin.iCloudGetStringValue(ICLOUD_KEY);
 ```
 
 ### iCloud Entitlement Requirement
@@ -71,6 +71,31 @@ Be sure to include the entitlement below otherwise icloud key value store will n
 	<string>$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>
 </dict>
 </plist>
+```
+
+### Save Integer Value to iCloud
+
+```csharp
+bool success = iOSPlugin.iCloudSaveIntValue(ICLOUD_KEY, valueToSave);
+```
+
+### Get Integer Value from iCloud
+
+```csharp
+int savedValue = iOSPlugin.iCloudGetIntValue(ICLOUD_KEY);
+```
+
+
+### Save Bool Value to iCloud
+
+```csharp
+bool success = iOSPlugin.iCloudSaveBoolValue(ICLOUD_KEY, valueToSave);
+```
+
+### Get Bool Value from iCloud
+
+```csharp
+bool savedValue = iOSPlugin.iCloudGetBoolValue(ICLOUD_KEY);
 ```
 
 <img src="https://github.com/dilmerv/UnityiOSBridgeEssentials/blob/master/docs/images/bridge.gif" width="300">

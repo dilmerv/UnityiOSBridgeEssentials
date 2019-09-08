@@ -32,10 +32,22 @@ public class iOSPlugin : MonoBehaviour
     private static extern string _GetBatteryLevel();
 
     [DllImport("__Internal")]
-    private static extern string _iCloudGetValue(string key);
+    private static extern string _iCloudGetStringValue(string key);
 
     [DllImport("__Internal")]
-    private static extern bool _iCloudSaveValue(string key, string value);
+    private static extern bool _iCloudSaveStringValue(string key, string value);
+
+    [DllImport("__Internal")]
+    private static extern int _iCloudGetIntValue(string key);
+
+    [DllImport("__Internal")]
+    private static extern bool _iCloudSaveIntValue(string key, int value);
+
+    [DllImport("__Internal")]
+    private static extern bool _iCloudGetBoolValue(string key);
+
+    [DllImport("__Internal")]
+    private static extern bool _iCloudSaveBoolValue(string key, bool value);
     
     public static void ShowAlert(string title, string message)
     {
@@ -62,14 +74,34 @@ public class iOSPlugin : MonoBehaviour
         return _GetBatteryLevel();
     }
 
-    public static string iCloudGetValue(string key)
+    public static string iCloudGetStringValue(string key)
     {
-        return _iCloudGetValue(key);
+        return _iCloudGetStringValue(key);
     }
 
-    public static bool iCloudSaveValue(string key, string value)
+    public static bool iCloudSaveStringValue(string key, string value)
     {
-        return _iCloudSaveValue(key, value);
+        return _iCloudSaveStringValue(key, value);
+    }
+
+    public static int iCloudGetIntValue(string key)
+    {
+        return _iCloudGetIntValue(key);
+    }
+
+    public static bool iCloudSaveIntValue(string key, int value)
+    {
+        return _iCloudSaveIntValue(key, value);
+    }
+
+    public static bool iCloudGetBoolValue(string key)
+    {
+        return _iCloudGetBoolValue(key);
+    }
+
+    public static bool iCloudSaveBoolValue(string key, bool value)
+    {
+        return _iCloudSaveBoolValue(key, value);
     }
 
     #else
@@ -107,6 +139,30 @@ public class iOSPlugin : MonoBehaviour
     }
 
     public static bool iCloudSaveValue(string key, string value)
+    {
+        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        return false;
+    }
+
+    public static int iCloudGetIntValue(string key)
+    {
+        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        return 0;
+    }
+
+    public static bool iCloudSaveIntValue(string key, int value)
+    {
+        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        return false;
+    }
+
+    public static bool iCloudGetBoolValue(string key)
+    {
+        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        return false;
+    }
+
+    public static bool iCloudSaveBoolValue(string key, bool value)
     {
         Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
         return false;

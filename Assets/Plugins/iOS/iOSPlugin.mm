@@ -13,10 +13,10 @@ extern UIViewController *UnityGetGLViewController();
 +(void)alertView:(NSString*)title addMessage:(NSString*) message
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
-                                message:message preferredStyle:UIAlertControllerStyleAlert];
-
+                                                                   message:message preferredStyle:UIAlertControllerStyleAlert];
+    
     UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-
+    
     [alert addAction:defaultAction];
     [UnityGetGLViewController() presentViewController:alert animated:YES completion:nil];
 }
@@ -24,15 +24,15 @@ extern UIViewController *UnityGetGLViewController();
 +(void)alertConfirmationView:(NSString*)title addMessage:(NSString*)message addCallBack:(NSString*)callback
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
-                                message:message preferredStyle:UIAlertControllerStyleAlert];
-
+                                                                   message:message preferredStyle:UIAlertControllerStyleAlert];
+    
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-        handler:^(UIAlertAction *action){
-            UnitySendMessage("iOSPluginCallBacks", [callback UTF8String], "");
-        }];
-
+                                                     handler:^(UIAlertAction *action){
+                                                         UnitySendMessage("iOSPluginCallBacks", [callback UTF8String], "");
+                                                     }];
+    
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-
+    
     [alert addAction:okAction];
     [alert addAction:cancelAction];
     [UnityGetGLViewController() presentViewController:alert animated:YES completion:nil];
@@ -75,13 +75,42 @@ extern UIViewController *UnityGetGLViewController();
     return [NSString stringWithFormat:@"battery left: %f", batLeft];
 }
 
-+(NSString *)iCloudGetValue:(NSString *)key
+// get or load integer values
++(int)iCloudGetIntValue:(NSString *)key
+{
+    NSUbiquitousKeyValueStore *cloudStore = [NSUbiquitousKeyValueStore defaultStore];
+    return [[cloudStore objectForKey:key] intValue];
+}
+
++(BOOL)iCloudSaveIntValue:(NSString *)key setValue:(long)value
+{
+    NSUbiquitousKeyValueStore *cloudStore = [NSUbiquitousKeyValueStore defaultStore];
+    [cloudStore setLongLong:value forKey:key];
+    return [cloudStore synchronize];
+}
+
+// get or load bool values
++(BOOL)iCloudGetBoolValue:(NSString *)key
+{
+    NSUbiquitousKeyValueStore *cloudStore = [NSUbiquitousKeyValueStore defaultStore];
+    return [[cloudStore objectForKey:key] boolValue];
+}
+
++(BOOL)iCloudSaveBoolValue:(NSString *)key setValue:(BOOL)value
+{
+    NSUbiquitousKeyValueStore *cloudStore = [NSUbiquitousKeyValueStore defaultStore];
+    [cloudStore setBool:value forKey:key];
+    return [cloudStore synchronize];
+}
+
+// get or load string values
++(NSString *)iCloudGetStringValue:(NSString *)key
 {
     NSUbiquitousKeyValueStore *cloudStore = [NSUbiquitousKeyValueStore defaultStore];
     return [cloudStore objectForKey:key];
 }
 
-+(BOOL)iCloudSaveValue:(NSString *)key setValue:(NSString *)value
++(BOOL)iCloudSaveStringValue:(NSString *)key setValue:(NSString *)value
 {
     NSUbiquitousKeyValueStore *cloudStore = [NSUbiquitousKeyValueStore defaultStore];
     [cloudStore setObject:value forKey:key];
@@ -94,10 +123,10 @@ char* cStringCopy(const char* string)
 {
     if (string == NULL)
         return NULL;
-
+    
     char* res = (char*)malloc(strlen(string) + 1);
     strcpy(res, string);
-
+    
     return res;
 }
 
@@ -107,7 +136,7 @@ extern "C"
     {
         [iOSPlugin alertView:[NSString stringWithUTF8String:title] addMessage:[NSString stringWithUTF8String:message]];
     }
-
+    
     void _ShowAlertConfirmation(const char *title, const char *message, const char *callBack)
     {
         [iOSPlugin alertConfirmationView:[NSString stringWithUTF8String:title] addMessage:[NSString stringWithUTF8String:message]  addCallBack:[NSString stringWithUTF8String:callBack]];
@@ -127,14 +156,34 @@ extern "C"
     {
         return cStringCopy([[iOSPlugin getBatteryLevel] UTF8String]);
     }
-
-    const char * _iCloudGetValue(const char *key)
+    
+    const char * _iCloudGetStringValue(const char *key)
     {
-        return cStringCopy([[iOSPlugin iCloudGetValue:[NSString stringWithUTF8String:key]] UTF8String]);
+        return cStringCopy([[iOSPlugin iCloudGetStringValue:[NSString stringWithUTF8String:key]] UTF8String]);
     }
     
-    bool _iCloudSaveValue(const char *key, const char *value)
+    bool _iCloudSaveStringValue(const char *key, const char *value)
     {
-        return [iOSPlugin iCloudSaveValue:[NSString stringWithUTF8String:key] setValue:[NSString stringWithUTF8String:value]];
+        return [iOSPlugin iCloudSaveStringValue:[NSString stringWithUTF8String:key] setValue:[NSString stringWithUTF8String:value]];
+    }
+    
+    int _iCloudGetIntValue(const char *key)
+    {
+        return [iOSPlugin iCloudGetIntValue:[NSString stringWithUTF8String:key]];
+    }
+    
+    bool _iCloudSaveIntValue(const char *key, int value)
+    {
+        return [iOSPlugin iCloudSaveIntValue:[NSString stringWithUTF8String:key] setValue:value];
+    }
+    
+    bool _iCloudGetBoolValue(const char *key)
+    {
+        return [iOSPlugin iCloudGetBoolValue:[NSString stringWithUTF8String:key]];
+    }
+    
+    bool _iCloudSaveBoolValue(const char *key, bool value)
+    {
+        return [iOSPlugin iCloudSaveBoolValue:[NSString stringWithUTF8String:key] setValue:value];
     }
 }
