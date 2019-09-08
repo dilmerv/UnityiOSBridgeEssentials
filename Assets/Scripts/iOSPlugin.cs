@@ -30,6 +30,12 @@ public class iOSPlugin : MonoBehaviour
 
     [DllImport("__Internal")]
     private static extern string _GetBatteryLevel();
+
+    [DllImport("__Internal")]
+    private static extern string _iCloudGetValue(string key);
+
+    [DllImport("__Internal")]
+    private static extern bool _iCloudSaveValue(string key, string value);
     
     public static void ShowAlert(string title, string message)
     {
@@ -56,6 +62,16 @@ public class iOSPlugin : MonoBehaviour
         return _GetBatteryLevel();
     }
 
+    public static string iCloudGetValue(string key)
+    {
+        return _iCloudGetValue(key);
+    }
+
+    public static bool iCloudSaveValue(string key, string value)
+    {
+        return _iCloudSaveValue(key, value);
+    }
+
     #else
 
     public static void ShowAlert(string title, string message)
@@ -79,9 +95,21 @@ public class iOSPlugin : MonoBehaviour
         return 0;
     }
 
-     public static void GetBatteryLevel()
+    public static void GetBatteryLevel()
     {
         Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+    }
+
+    public static string iCloudGetValue(string key)
+    {
+        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        return "";
+    }
+
+    public static bool iCloudSaveValue(string key, string value)
+    {
+        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        return false;
     }
 
     #endif

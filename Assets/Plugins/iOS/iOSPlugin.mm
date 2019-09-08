@@ -75,6 +75,19 @@ extern UIViewController *UnityGetGLViewController();
     return [NSString stringWithFormat:@"battery left: %f", batLeft];
 }
 
++(NSString *)iCloudGetValue:(NSString *)key
+{
+    NSUbiquitousKeyValueStore *cloudStore = [NSUbiquitousKeyValueStore defaultStore];
+    return [cloudStore objectForKey:key];
+}
+
++(BOOL)iCloudSaveValue:(NSString *)key setValue:(NSString *)value
+{
+    NSUbiquitousKeyValueStore *cloudStore = [NSUbiquitousKeyValueStore defaultStore];
+    [cloudStore setObject:value forKey:key];
+    return [cloudStore synchronize];
+}
+
 @end
 
 char* cStringCopy(const char* string)
@@ -113,5 +126,15 @@ extern "C"
     const char * _GetBatteryLevel()
     {
         return cStringCopy([[iOSPlugin getBatteryLevel] UTF8String]);
+    }
+
+    const char * _iCloudGetValue(const char *key)
+    {
+        return cStringCopy([[iOSPlugin iCloudGetValue:[NSString stringWithUTF8String:key]] UTF8String]);
+    }
+    
+    bool _iCloudSaveValue(const char *key, const char *value)
+    {
+        return [iOSPlugin iCloudSaveValue:[NSString stringWithUTF8String:key] setValue:[NSString stringWithUTF8String:value]];
     }
 }
