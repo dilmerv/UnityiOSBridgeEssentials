@@ -4,7 +4,6 @@ Unity3d iOS Plugin / iOS Bridge for communicating with iOS Native Code from Unit
 
 Example of how to use the iOSPlugin:
 
-
 ### Basic Alert
 
 ```csharp
@@ -43,6 +42,35 @@ public enum BatteryStatus
 
 ```csharp
 iOSPlugin.GetBatteryLevel()
+```
+
+### Save Value to iCloud
+
+```csharp
+bool success = iOSPlugin.iCloudSaveValue(ICLOUD_KEY, valueToSave);
+```
+
+### Get Value from iCloud
+
+```csharp
+string savedValue = iOSPlugin.iCloudGetValue(ICLOUD_KEY);
+```
+
+### iCloud Entitlement Requirement
+
+Be sure to include the entitlement below otherwise icloud key value store will not work
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>com.apple.developer.icloud-container-identifiers</key>
+	<array/>
+	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
+	<string>$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>
+</dict>
+</plist>
 ```
 
 <img src="https://github.com/dilmerv/UnityiOSBridgeEssentials/blob/master/docs/images/bridge.gif" width="300">
